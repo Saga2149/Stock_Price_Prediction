@@ -24,6 +24,7 @@ class Model(View):
         for i in range(0,len(data)):
             new_data['Date'][i] = data['Date'][i]
             new_data['Close'][i] = data['Close'][i]
+        timestamp = new_data['Date'].to_frame(name='Date')
         new_data.index = new_data.Date
         new_data.drop('Date', axis=1, inplace=True)
 
@@ -42,8 +43,8 @@ class Model(View):
             y_train.append(scaled_data[i,0])
         x_train, y_train = np.array(x_train), np.array(y_train)
         x_train = np.reshape(x_train, (x_train.shape[0],x_train.shape[1],1))
-
-        return x_train,y_train,train,valid,new_data,scaler
+    
+        return x_train,y_train,train,valid,new_data,scaler,timestamp
 
     def train(self):
         # create and fit the LSTM network
@@ -56,21 +57,21 @@ class Model(View):
         model.fit(x_train, y_train, epochs=20, batch_size=1, verbose=2)
 
         return model    
-    # # list1 = [1,2,3,5,7,8,9,7,5,25,10]
-    # # list2 = [10000,20000,10500,25000,1594890250,78954,12034,24561,12304,52341,21367]
-    # def get(self,request):
-    #     data_dict = { "list1" : Model.list1,"list2" : Model.list2}
-    #     print(Model.B_DIR)    
-    #     return HttpResponse(json.dumps(data_dict), content_type='application/json')
+    
 
 
 def index(request):
     return render(request,'index.html')
+
+def chart(request):
+    return render(request,'charts.html')
     
 def findList(request):
     BaseDIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     model = Model()
-    x_train,y_train,train,valid,new_data,scaler = model.preprocess()  
+    x_train,y_train,train,valid,new_data,scaler,timestamp = model.preprocess()
+    timestamp_train = timestamp[0:1700]
+    timestamp_test = timestamp[1700:]  
     filename = os.path.join(BaseDIR,"stock_dataset","LSTM.sav")
     model=pickle.load(open(filename, 'rb'))
 
@@ -93,6 +94,6 @@ def findList(request):
     valid = new_data[1700:]
     valid['Predictions'] = closing_price
 
-    data_dict = { "Close" : valid['Close'].tolist(),"Predictions" : valid['Predictions'].tolist()}
+    data_dict = { "Close" : valid['Close'].tolist(),"Predictions" : valid['Predictions'].tolist(), "Date":timestamp_test['Date'].tolist()}
     return HttpResponse(json.dumps(data_dict), content_type='application/json')
     #return model.get(request)    
