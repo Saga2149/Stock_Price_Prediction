@@ -34,7 +34,7 @@
     </button>
 
     <!-- Navbar Search -->
-    <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
+   <!-- <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
       <div class="input-group">
         <input type="text" class="form-control" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
         <div class="input-group-append">
@@ -44,9 +44,9 @@
         </div>
       </div>
     </form>
-
+    -->
     <!-- Navbar -->
-    <ul class="navbar-nav ml-auto ml-md-0">
+    <!--<ul class="navbar-nav ml-auto ml-md-0">
       <li class="nav-item dropdown no-arrow mx-1">
         <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <i class="fas fa-bell fa-fw"></i>
@@ -60,7 +60,7 @@
         </div>
       </li>
       <li class="nav-item dropdown no-arrow mx-1">
-        <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <a class="nav-link dropdown-toggle" href="#" id="`agesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <i class="fas fa-envelope fa-fw"></i>
           <span class="badge badge-danger">7</span>
         </a>
@@ -83,9 +83,9 @@
         </div>
       </li>
     </ul>
-
+  -->
   </nav>
-
+  
   <div id="wrapper">
 
     <!-- Sidebar -->
@@ -129,15 +129,15 @@
       <div class="container-fluid">
 
         <!-- Breadcrumbs-->
-        <ol class="breadcrumb">
+       <!-- <ol class="breadcrumb">
           <li class="breadcrumb-item">
             <a href="#">Dashboard</a>
           </li>
           <li class="breadcrumb-item active">Overview</li>
         </ol>
-
+        -->
         <!-- Icon Cards-->
-        <div class="row">
+      <!--  <div class="row">
           <div class="col-xl-3 col-sm-6 mb-3">
             <div class="card text-white bg-primary o-hidden h-100">
               <div class="card-body">
@@ -202,7 +202,7 @@
               </a>
             </div>
           </div>
-        </div>
+        </div>   -->
 
         <!-- Area Chart Example-->
         <div class="card mb-3">
@@ -313,7 +313,6 @@
 </body>
 <script>
 $(document).ready(function(){
-
   $.ajax(
     {
         type:"GET",
@@ -325,7 +324,6 @@ $(document).ready(function(){
             var tableData="";
             for(var i=0;i<data["Date"].length;i++){
               label.push(data["Date"][i].toString());
-
               tableData+="<tr>"+
                         "<td>"+i+"</td>"+
                         "<td>"+data["Date"][i]+"</td>"+
@@ -333,12 +331,11 @@ $(document).ready(function(){
                         "<td>"+data["Predictions"][i]+"</td>"+
                         "</tr>";
             }
-            console.log(tableData);
+            //console.log(tableData);
             $('#dataList').html(tableData);
             
             Chart.defaults.global.defaultFontFamily = '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
             Chart.defaults.global.defaultFontColor = '#292b2c';
-
             // Area Chart Example
             var ctx = document.getElementById("myAreaChart");
             var myLineChart = new Chart(ctx, {
@@ -390,8 +387,6 @@ $(document).ready(function(){
                 }
               }
             });
-
-
           
         }
      });
