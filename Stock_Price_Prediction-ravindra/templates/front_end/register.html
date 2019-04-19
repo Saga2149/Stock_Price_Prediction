@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+{% load staticfiles %}
+<link href="{% static 'vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet" type="text/css">
+<link href="{% static 'css/sb-admin.css' %}" rel="stylesheet">
+
+<body class="bg-dark">
+<div class="container">
+    <div class="card card-register mx-auto mt-5">
+<div class="card-header">Register an Account</div>
+      <div class="card-body">
+
+<form enctype="multipart/form-data" method="post" class="form-group">
+  
+  {% csrf_token %}
+  {{ user_form.as_p }}
+
+
+  <input type="submit" name="" value="Register">
+
+</form>
+</div>
+</div>
+</div>
+</div>
+</html> 
