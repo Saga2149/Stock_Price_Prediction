@@ -34,7 +34,8 @@ class Model(View):
                 x = datetime.datetime(int(lst[0][0],base=10),int(lst[0][1],base=10),int(lst[0][2],base=10))
                 x += datetime.timedelta(days=1)
                 now = datetime.datetime.now()
-               
+                print("------date----")
+                print(x)
                 if(x.date()<now.date()):
                         data = yf.download(company,x.strftime("%Y-%m-%d"),now.strftime("%Y-%m-%d"))
                         with open(filename, 'a') as f:

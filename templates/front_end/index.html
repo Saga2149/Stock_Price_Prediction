@@ -91,7 +91,7 @@
     <!-- Sidebar -->
     <ul class="sidebar navbar-nav">
       <li class="nav-item active">
-        <a class="nav-link" href="index.html">
+        <a class="nav-link" href="#">
           <i class="fas fa-fw fa-tachometer-alt"></i>
           <span>Dashboard</span>
         </a>
@@ -235,9 +235,9 @@
                     <th>Predicted Close Value</th>
                   </tr>
                 </tfoot>
-                <tbody id="dataList">
+                <!-- <tbody id="dataList">
                   
-                </tbody>
+                </tbody> -->
               </table>
             </div>
           </div>
@@ -322,19 +322,27 @@ $(document).ready(function(){
         {
             //console.log(data["list1"][0]);
             var label=[];
-            var tableData="";
-            for(var i=0;i<data["Date"].length;i++){
-              label.push(data["Date"][i].toString());
-              tableData+="<tr>"+
-                        "<td>"+i+"</td>"+
-                        "<td>"+data["Date"][i]+"</td>"+
-                        "<td>"+data["Close"][i]+"</td>"+
-                        "<td>"+data["Predictions"][i]+"</td>"+
-                        "</tr>";
-            }
-            //console.log(tableData);
-            $('#dataList').html(tableData);
+
+
+            var arr = [];
+          for(var i=0;i<data["Date"].length;i++) {
+            label.push(data["Date"][i].toString());
             
+            var iarr =[];
+            
+            iarr.push(i);
+            iarr.push(data["Date"][i]);
+            iarr.push(data["Close"][i]);
+            iarr.push(data["Predictions"][i]);
+            
+            arr.push(iarr);
+          }
+          $('#dataTable').DataTable( {
+				        data: arr,
+                bDestroy: true,
+                
+				    } );
+          
             renderGraph(label,data["Predictions"],data["Close"]);
         }
      });
@@ -354,18 +362,27 @@ function modelEvent(btn){
 		{
         //console.log(data["list1"][0]);
             var label=[];
-            var tableData="";
-            for(var i=0;i<data["Date"].length;i++){
-              label.push(data["Date"][i].toString());
-              tableData+="<tr>"+
-                        "<td>"+i+"</td>"+
-                        "<td>"+data["Date"][i]+"</td>"+
-                        "<td>"+data["Close"][i]+"</td>"+
-                        "<td>"+data["Predictions"][i]+"</td>"+
-                        "</tr>";
-            }
-            //console.log(tableData);
-            $('#dataList').html(tableData);
+            //var tableData="";
+
+          var arr = [];
+          for(var i=0;i<data["Date"].length;i++) {
+            label.push(data["Date"][i].toString());
+            
+            var iarr =[];
+            
+            iarr.push(i);
+            iarr.push(data["Date"][i]);
+            iarr.push(data["Close"][i]);
+            iarr.push(data["Predictions"][i]);
+            
+            arr.push(iarr);
+          }
+          $('#dataTable').DataTable( {
+				        data: arr,
+                bDestroy: true,
+               
+				    } );
+            
             renderGraph(label,data["Predictions"],data["Close"]);
 		},
 		error : function()
@@ -389,7 +406,7 @@ function renderGraph(label,predict,original){
               data: {
                 labels: label,
                 datasets: [{
-                  label: "Actual Closing",
+                  label: "Predicted",
                   lineTension: 0.3,
                   backgroundColor: "rgba(2,117,216,1)",
                   borderColor: "rgba(2,117,216,1)",
@@ -404,7 +421,7 @@ function renderGraph(label,predict,original){
                   fill: false,
                 },
                 {
-                  label: "Predicted Closing",
+                  label: "Actual",
                   lineTension: 0.3,
                   backgroundColor: "rgba(254, 62, 62, 1)",
                   borderColor: "rgba(254, 62, 62, 1)",
