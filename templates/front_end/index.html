@@ -139,60 +139,15 @@
               <div class="card-body">
                 <div class="card-body-icon">
                   <i class="fas fa-fw fa-cube"></i>
-
-                </div>
-                <div class="mr-5">Google</div>
-              </div>
-              <a class="card-footer text-white clearfix small z-1" id="google" href="#">
-                <span class="float-left">View Details</span>
-                <span class="float-right">
-                  <i class="fas fa-angle-right"></i>
-                </span>
-              </a>
-            </div>
-          </div>
-          <div class="col-xl-3 col-sm-6 mb-3">
-            <div class="card text-white bg-warning o-hidden h-100">
-              <div class="card-body">
-                <div class="card-body-icon">
-                  <i class="fas fa-fw fa-ring"></i>
-                </div>
-                <div class="mr-5">Apple</div>
-              </div>
-              <a class="card-footer text-white clearfix small z-1" href="#">
-                <span class="float-left">View Details</span>
-                <span class="float-right">
-                  <i class="fas fa-angle-right"></i>
-                </span>
-              </a>
-            </div>
-          </div>
-          <div class="col-xl-3 col-sm-6 mb-3">
-            <div class="card text-white bg-success o-hidden h-100">
-              <div class="card-body">
-                <div class="card-body-icon">
-                  <i class="fas fa-fw fa-square"></i>
-                </div>
-                <div class="mr-5">Amazon</div>
-              </div>
-              <a class="card-footer text-white clearfix small z-1" href="#">
-                <span class="float-left">View Details</span>
-                <span class="float-right">
-                  <i class="fas fa-angle-right"></i>
-                </span>
-              </a>
-            </div>
-          </div>
-          <div class="col-xl-3 col-sm-6 mb-3">
-            <div class="card text-white bg-danger o-hidden h-100">
-              <div class="card-body">
-                <div class="card-body-icon">
-                  <i class="fas fa-fw fa-life-ring"></i>
-                </div>
-                <div class="mr-5">Microsoft</div>
                 </div>
                 <div class="mr-5" id="companyId">Google</div>
               </div>
+              <!--  <a class="card-footer text-white clearfix small z-1" id="google" href="#">
+                <span class="float-left">View Details</span>
+                <span class="float-right">
+                  <i class="fas fa-angle-right"></i>
+                </span>
+              </a>  -->
             </div>
           </div>
         </div>  
@@ -327,11 +282,7 @@ $(document).ready(function(){
             
             var iarr =[];
             
-
-            iarr.push(i);
-
             iarr.push(data["Date"].length-i);
-
             iarr.push(data["Date"][i]);
             iarr.push(data["Close"][i]);
             iarr.push(data["Predictions"][i]);
@@ -352,7 +303,6 @@ $(document).ready(function(){
 function modelEvent(btn){
   //alert(btn.id);
   var id=parseInt(btn.id);
-
   switch(id){
     case 2: $("#companyId").text("Apple");
             break;
@@ -363,7 +313,6 @@ function modelEvent(btn){
 
     default: $("#companyId").text("Google");                        
   }
-
 
   console.log(btn.id);
   $.ajax({
@@ -382,8 +331,7 @@ function modelEvent(btn){
             label.push(data["Date"][i].toString());
             
             var iarr =[];
-
-            iarr.push(i);
+            
             iarr.push(data["Date"].length-i);
             iarr.push(data["Date"][i]);
             iarr.push(data["Close"][i]);
@@ -483,3 +431,6 @@ function renderGraph(label,predict,original){
 }
 </script>
 </html>
+×
+Drag and Drop
+The image will be downloaded by Fatkun
