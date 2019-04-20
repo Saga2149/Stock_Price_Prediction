@@ -138,11 +138,11 @@ def user_login(request):
                 username=request.POST.get('username')
                 password=request.POST.get('password')
 
-                user = authenticate(username='username', password='password')
+                user = authenticate(username=username, password=password)
                 if user:
                         if user.is_active:
                                 login(request, user)
-                                return HttpResponseRedirect('index')
+                                return HttpResponseRedirect(reverse('index'))
                         else:
                                 return HttpResponse("Acoount not active")
                 else:
@@ -154,6 +154,7 @@ def user_login(request):
 
 
 @csrf_exempt
+@login_required
 def index(request):
     return render(request,'index.html')
 
