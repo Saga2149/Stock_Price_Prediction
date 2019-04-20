@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse,HttpResponseRedirect
 from django.views.generic import View,TemplateView
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
@@ -18,6 +18,10 @@ from yahoo_finance import Share
 import datetime
 import socket
 import fix_yahoo_finance as yf 
+from stock.forms import UserForm, UserProfileInfoForm
+from django.contrib.auth import authenticate,login,logout
+from django.urls import reverse
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
  
@@ -92,7 +96,83 @@ class Model(View):
                 return model                      
     
 
+        def train(self,x_train,y_train,folder,pickle_file):
+                # create and fit the LSTM network
+                model = Sequential()
+                model.add(LSTM(units=50, return_sequences=True, input_shape=(x_train.shape[1],1)))
+                model.add(LSTM(units=50))
+                model.add(Dense(1))
+
+                model.compile(loss='mean_squared_error', optimizer='adam')
+                model.fit(x_train, y_train, epochs=10, batch_size=50, verbose=2)
+
+                # filename = './stock_dataset/LSTM.sav'
+                filename = os.path.join(Model.BaseDIR,"stock_dataset",folder,pickle_file)
+                pickle.dump(model, open(filename, 'wb'))
+
+                result=Timestamp.objects.first()        
+                result.timeStamp = datetime.datetime.now()
+                result.save()
+
+                return model                      
+    
+
+def register(request):
+    registered=False
+
+    if request.method == "POST":
+        #print(json.loads(request.body))
+        user_form = UserForm(data=request.POST)
+        profile_form = UserProfileInfoForm(data=request.POST)
+
+        if user_form.is_valid() and profile_form.is_valid():
+            user = user_form.save()
+            user.set_password(user.password)
+            user.save()
+
+            profile = profile_form.save(commit=False)
+            profile.user = user
+            profile.save()
+
+            registered= True
+        else: print(user_form.errors, profile_form.errors)
+    else:
+        user_form = UserForm
+        profile_form = UserProfileInfoForm
+
+    return render(request, 'register.html',{
+                                                'user_form':user_form,
+                                                   'profile_form':profile_form
+                                                    })
+@login_required
+def user_logout(request):
+        logout(request)
+        return HttpResponseRedirect(reverse('index'))
+
+
+def user_login(request):
+
+        if(request.method=="POST"):
+                username=request.POST.get('username')
+                password=request.POST.get('password')
+
+                user = authenticate(username=username, password=password)
+                if user:
+                        if user.is_active:
+                                login(request, user)
+                                return HttpResponseRedirect(reverse('index'))
+                        else:
+                                return HttpResponse("Acoount not active")
+                else:
+                        return HttpResponse("Invalid Login Details")
+        
+        return render(request,'login.html',{})
+
+
+
+
 @csrf_exempt
+@login_required
 def index(request):
     return render(request,'index.html')
 
