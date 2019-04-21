@@ -22,9 +22,12 @@ from stock.forms import UserForm, UserProfileInfoForm
 from django.contrib.auth import authenticate,login,logout
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
-
+import logging
 # Create your views here.
  
+ # Get an instance of a logger
+logger = logging.getLogger(__name__)
+
 class Model(View):
         BaseDIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -176,6 +179,7 @@ def user_login(request):
 @csrf_exempt
 @login_required
 def index(request):
+    logger.error('Something went wrong!')    
     return render(request,'index.html')
 
 @csrf_exempt
