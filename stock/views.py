@@ -23,6 +23,8 @@ from django.contrib.auth import authenticate,login,logout
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 import logging
+from .elastic_search_connection import DateIndex
+from keras import backend as K
 # Create your views here.
  
  # Get an instance of a logger
@@ -193,6 +195,17 @@ def findList(request):
     now = datetime.datetime.now()
     BaseDIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+    #indexing function
+    def indexing(self):
+       obj = DateIndex(
+            meta = {
+                'id':self.id
+            },
+            timeStamp = self.timeStamp,
+       )
+       obj.save()
+       return obj.to_dict(include_meta=True)
+
     json_object = json.loads(request.body)
     id = json_object["id"]
 
@@ -258,7 +271,7 @@ def findList(request):
     X_test = np.reshape(X_test, (X_test.shape[0],X_test.shape[1],1))
     closing_price = model.predict(X_test)
     closing_price = scaler.inverse_transform(closing_price)
-
+    K.clear_session()    
     train = new_data[:1700]
     valid = new_data[1700:]
     valid['Predictions'] = closing_price
