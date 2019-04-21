@@ -10,7 +10,7 @@
 <div class="card-header">Register an Account</div>
       <div class="card-body">
 
-<form action="{% url 'user_login' %}" method="post" class="form-group">
+<form action="{% url 'login' %}" method="post" class="form-group">
   
   {% csrf_token %}
   <label for="username">Username:<label>
@@ -24,6 +24,7 @@
 
 </form>
 </div>
+<a href="{% url 'register' %}">New user? Signup </a>
 </div>
 </div>
 </div>
