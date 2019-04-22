@@ -90,7 +90,7 @@ class Model(View):
                 model.add(Dense(1))
 
                 model.compile(loss='mean_squared_error', optimizer='adam')
-                model.fit(x_train, y_train, epochs=10, batch_size=50, verbose=2)
+                model.fit(x_train, y_train, epochs=20, batch_size=10, verbose=2)
 
                 # filename = './stock_dataset/LSTM.sav'
                 filename = os.path.join(Model.BaseDIR,"stock_dataset",folder,pickle_file)
