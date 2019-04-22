@@ -23,7 +23,7 @@ from django.contrib.auth import authenticate,login,logout
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 import logging
-from .elastic_search_connection import DateIndex
+
 from keras import backend as K
 # Create your views here.
  
@@ -194,17 +194,6 @@ def findList(request):
     current_date = datetime.datetime.strptime(str(Timestamp.objects.first()), '%Y-%m-%d %H:%M:%S')
     now = datetime.datetime.now()
     BaseDIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
-    #indexing function
-    def indexing(self):
-       obj = DateIndex(
-            meta = {
-                'id':self.id
-            },
-            timeStamp = self.timeStamp,
-       )
-       obj.save()
-       return obj.to_dict(include_meta=True)
 
     json_object = json.loads(request.body)
     id = json_object["id"]

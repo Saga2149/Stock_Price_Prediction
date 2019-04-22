@@ -10,4 +10,4 @@ services:
       - .:/SPP
     command: >
 
-      sh -c "python manage.py migrate && python manage.py makemigrations stock && python manage.py runserver 0.0.0.0:8000"
+      sh -c "python manage.py migrate && python manage.py makemigrations stock && python manage.py migrate && ./manage.py test stock &&python manage.py runserver 0.0.0.0:8000"
