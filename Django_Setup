@@ -1,0 +1,19 @@
+#SETTING CONDA ENVIRONMENT
+conda create -n spe python=3.6.3 anaconda
+#SWITCH TO ENVIRONMENT
+conda activate spe
+
+1).Create a folder using "mkdir <first_app>".
+2).Now switch into that folder using "cd <firs_app>".
+3).Setting up workspace type "django-admin startproject <workspace_name>" in console.
+4).cd <workspace_name,stock>
+5).Set up virtual environment type "django-admin startapp <project_name,models>"
+6).Open settings.py
+7).Under "settings.py" add application name "models" under INSTALLED_APPS.
+8).Go to console and type "python manage.py migrate" so that all apps get register to entire project.
+9).Apply this change to your project "python manage.py makemigrations <models>"
+10). Again "python manage.py migrate".
+
+#INCLUDING TEMPLATE
+1)create relative url in settings.py
+2)Add it to DIR under TEMPLATES  
