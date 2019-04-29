@@ -82,26 +82,7 @@ class Model(View):
         
                 return x_train,y_train,train,valid,new_data,scaler,timestamp   
 
-        def train(self,x_train,y_train,folder,pickle_file):
-                # create and fit the LSTM network
-                model = Sequential()
-                model.add(LSTM(units=50, return_sequences=True, input_shape=(x_train.shape[1],1)))
-                model.add(LSTM(units=50))
-                model.add(Dense(1))
-
-                model.compile(loss='mean_squared_error', optimizer='adam')
-                model.fit(x_train, y_train, epochs=20, batch_size=10, verbose=2)
-
-                # filename = './stock_dataset/LSTM.sav'
-                filename = os.path.join(Model.BaseDIR,"stock_dataset",folder,pickle_file)
-                pickle.dump(model, open(filename, 'wb'))
-
-                result=Timestamp.objects.first()        
-                result.timeStamp = datetime.datetime.now()
-                result.save()
-
-                return model                      
-    
+        
 
         def train(self,x_train,y_train,folder,pickle_file):
                 # create and fit the LSTM network
@@ -184,9 +165,9 @@ def index(request):
     logger.error('Something went wrong!')    
     return render(request,'index.html')
 
-@csrf_exempt
-def chart(request):
-    return render(request,'charts.html')
+# @csrf_exempt
+# def chart(request):
+#     return render(request,'charts.html')
 
 @csrf_exempt    
 def findList(request):
