@@ -43,5 +43,5 @@ tensorflow-estimator==1.13.0
 termcolor==1.1.0
 text-unidecode==1.2
 urllib3==1.24.1
-Werkzeug==0.15.2
+Werkzeug==0.15.3
 yahoo-finance==1.4.0
